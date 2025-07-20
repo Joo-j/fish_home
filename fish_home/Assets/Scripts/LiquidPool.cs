@@ -31,7 +31,7 @@ namespace FishHome
         private void CreateLiquid()
         {
             var liquid = GameObject.Instantiate<Liquid>(_liquidPrefab, _poolTF);
-
+            liquid.Init();
             liquid.gameObject.SetActive(false);
             _liquidPool.Enqueue(liquid);
         }
