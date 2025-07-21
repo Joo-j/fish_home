@@ -19,8 +19,6 @@ namespace FishHome
 
             var value = 0.01f * _index;
             _rigidbody2D.mass += value;
-
-            _spriteRenderer.color = Color.Lerp(Color.red, Color.black, value);
         }
     }
 }
