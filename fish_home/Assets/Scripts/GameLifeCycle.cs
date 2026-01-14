@@ -8,7 +8,7 @@ namespace FishHome
     {
         void Start()
         {
-            ChapterManager.Instance.Init();
+            StageManager.Instance.Init();
         }
 
         // Update is called once per frame

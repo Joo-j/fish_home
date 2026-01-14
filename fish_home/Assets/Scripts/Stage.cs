@@ -6,18 +6,18 @@ using FishHome.Util;
 
 namespace FishHome
 {
-    public class Chapter : MonoBehaviour
+    public class Stage : MonoBehaviour
     {
         [SerializeField] private Transform _fishSpawnPoint = null;
         [SerializeField] private ColliderInvoker _colliderInvoker = null;
         [SerializeField] private int _maxLiquidCount = 1000;
 
-        private const string PATH_CHAPTER_VIEW = "ChapterView";
+        private const string PATH_STAGE_VIEW = "StageView";
         private const string PATH_FISH = "Fish";
-        private const float SPAWN_INTERVAL = 0.05f;
+        private const float SPAWN_INTERVAL = 0.1f;
         private const float SPAWN_Y_POS = 9f;
 
-        private ChapterView _chapterView = null;
+        private StageView _stageView = null;
         private Action _onClear = null;
         private DateTime _lastSpawnTime = DateTime.MinValue;
         private int _liquidCount = 0;
@@ -26,8 +26,8 @@ namespace FishHome
         public void Init(Action onClear)
         {
             _onClear = onClear;
-            _chapterView = GameObject.Instantiate(Resources.Load<ChapterView>(PATH_CHAPTER_VIEW));
-            _chapterView.Init(OnClickReset);
+            _stageView = GameObject.Instantiate(Resources.Load<StageView>(PATH_STAGE_VIEW));
+            _stageView.Init(OnClickReset);
 
             _colliderInvoker.Init(OnEnterDestination);
 
@@ -38,7 +38,7 @@ namespace FishHome
         {
             LiquidPool.Instance.ReturnAllLiquids();
             _onClear = null;
-            _chapterView = null;
+            _stageView = null;
             _colliderInvoker = null;
             GameObject.Destroy(gameObject);
         }
@@ -50,6 +50,7 @@ namespace FishHome
                 var pos = Input.mousePosition;
 
                 var worldPos = Camera.main.ScreenToWorldPoint(pos);
+                worldPos.x = worldPos.x + UnityEngine.Random.Range(-0.5f, 0.5f);
                 worldPos.z = 0f;
                 worldPos.y = SPAWN_Y_POS;
 
@@ -78,7 +79,7 @@ namespace FishHome
             liquid.transform.position = pos;
             ++_liquidCount;
 
-            _chapterView.UpdateProgress((float)(_maxLiquidCount - _liquidCount) / _maxLiquidCount);
+            _stageView.UpdateProgress((float)(_maxLiquidCount - _liquidCount) / _maxLiquidCount);
         }
 
         private void OnEnterDestination(Collider2D my, Collider2D other)
@@ -93,7 +94,7 @@ namespace FishHome
         {
             LiquidPool.Instance.ReturnAllLiquids();
             _liquidCount = 0;
-            _chapterView.UpdateProgress((float)(_maxLiquidCount - _liquidCount) / _maxLiquidCount);
+            _stageView.UpdateProgress((float)(_maxLiquidCount - _liquidCount) / _maxLiquidCount);
             GameObject.Destroy(_fish.gameObject);
             _fish = null;
             SpawnFish();

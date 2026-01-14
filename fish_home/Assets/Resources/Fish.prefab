@@ -234,5 +234,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody2D: {fileID: 2440160067524438918}
-  _scale: 0.25
+  _scale: 0.2
   _buoyancy: 1

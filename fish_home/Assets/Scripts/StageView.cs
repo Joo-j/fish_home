@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace FishHome
 {
-    public class ChapterView : MonoBehaviour
+    public class StageView : MonoBehaviour
     {
         [SerializeField] private RectTransform _progressBar;
         [SerializeField] private Image _progress;
